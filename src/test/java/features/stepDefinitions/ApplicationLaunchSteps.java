@@ -1,15 +1,20 @@
 package features.stepDefinitions;
 
 import cucumber.api.java.en.Given;
-import features.Pages;
-import org.testng.Assert;
 import pageObject.ApplicationPageLaunchObject;
+import pageObject.LandingPageObject;
 
-public class ApplicationLaunchSteps extends Pages {
+public class ApplicationLaunchSteps {
+
+    private DriverFactory driverFactory;
+
+    public ApplicationLaunchSteps(DriverFactory driverFactory){
+        this.driverFactory = driverFactory;
+    }
 
     @Given("the user wants to use train schedule application")
     public void the_user_wants_to_use_train_schedule_application() {
-        applicationLaunchObject = new ApplicationPageLaunchObject(driver);
-        landingPageObject = applicationLaunchObject.launchApplication();
+        ApplicationPageLaunchObject applicationPageLaunchObject = new ApplicationPageLaunchObject(driverFactory.driver);
+        LandingPageObject landingPageObject = applicationPageLaunchObject.launchApplication();
     }
 }

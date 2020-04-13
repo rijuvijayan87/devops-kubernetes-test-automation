@@ -3,18 +3,22 @@ package features.stepDefinitions;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import features.Pages;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.io.IOException;
 
-public class MasterHooks extends Pages {
+public class MasterHooks {
+
+    private WebDriver driver;
+    private DriverFactory driverFactory;
+
+    public MasterHooks(DriverFactory factory){
+        this.driverFactory = factory;
+    }
 
     @Before
     public void setup(Scenario cukeScenarioObj) throws IOException {
-        driver = createWebDriver();
-        persistentData.setContext("testCase", cukeScenarioObj.getName());
+        this.driver = driverFactory.createWebDriver();
     }
 
     @After

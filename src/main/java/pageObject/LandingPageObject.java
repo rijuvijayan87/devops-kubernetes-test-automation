@@ -4,16 +4,18 @@ import libs.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LandingPageObject extends BasePage {
+public class LandingPageObject extends BasePage{
+    private WebDriver driver;
 
     private By headerFindYourTrain = By.cssSelector("body > h1");
 
     protected LandingPageObject(WebDriver driver) {
         super(driver);
+        this.driver = driver;
     }
 
-    public boolean checkIfPageIsLoadedSuccessfully() {
-        return isElementVisibleAndClickable(headerFindYourTrain, 10);
+    public void checkIfPageIsLoadedSuccessfully() {
+        //return isElementVisibleAndClickable(headerFindYourTrain, 10);
     }
 
 }

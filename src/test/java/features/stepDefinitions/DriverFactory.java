@@ -1,6 +1,7 @@
-package libs;
+package features.stepDefinitions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import libs.PropertyFiles;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,33 +15,33 @@ import persistence.ScenarioContext;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DriverFactory extends PropertyFiles {
-    protected static WebDriver driver;
+public class DriverFactory {
+    protected WebDriver driver;
     protected ScenarioContext persistentData;
-
+    private PropertyFiles propertyFiles = new PropertyFiles();
 
     protected WebDriver createWebDriver() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        if (getPropertyValue("EXECUTIONONSERVER").equalsIgnoreCase("true")) {
+        if (propertyFiles.getPropertyValue("EXECUTIONONSERVER").equalsIgnoreCase("true")) {
 
-            if (getPropertyValue("BROWSER").equalsIgnoreCase("chrome")) {
+            if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("chrome")) {
                 capabilities = DesiredCapabilities.chrome();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-debugging-port=9222");
                 options.setExperimentalOption("useAutomationExtension", false);
-                if (getPropertyValue("HEADLESS").equalsIgnoreCase("true")) {
+                if (propertyFiles.getPropertyValue("HEADLESS").equalsIgnoreCase("true")) {
                     options.addArguments("HEADLESS");
                 }
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            } else if (getPropertyValue("BROWSER").equalsIgnoreCase("firefox")) {
+            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("firefox")) {
                 capabilities = DesiredCapabilities.firefox();
-            } else if (getPropertyValue("BROWSER").equalsIgnoreCase("ie")) {
+            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("ie")) {
                 capabilities = DesiredCapabilities.internetExplorer();
             }
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             try {
-                this.driver = new RemoteWebDriver(new URL(getPropertyValue("selenium_local_server")), capabilities);
+                this.driver = new RemoteWebDriver(new URL(propertyFiles.getPropertyValue("selenium_local_server")), capabilities);
             } catch (UnreachableBrowserException exception) {
                 System.out.println("Selenium server not setup. Creating driver using webdriver manager");
                 WebDriverManager.chromedriver().setup();

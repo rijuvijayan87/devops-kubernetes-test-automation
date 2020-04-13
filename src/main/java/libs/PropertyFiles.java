@@ -13,7 +13,7 @@ public class PropertyFiles {
 
     private Properties prop = null;
 
-    PropertyFiles() {
+    public PropertyFiles() {
         initPropertyFiles();
     }
 
@@ -27,7 +27,7 @@ public class PropertyFiles {
     }
 
 
-    String getPropertyValue(String key) {
+    public String getPropertyValue(String key) {
         String value = null;
         try {
             value = prop.getProperty(key).trim();
