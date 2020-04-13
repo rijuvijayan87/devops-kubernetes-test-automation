@@ -145,30 +145,54 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M4</version>
-<!--        <configuration>-->
-<!--          <suiteXmlFiles>-->
-<!--            <suiteXmlFile>testng.xml</suiteXmlFile>-->
-<!--          </suiteXmlFiles>-->
-
-<!--        </configuration>-->
+        <version>3.0.0-M3</version>
         <executions>
           <execution>
             <goals>
               <goal>integration-test</goal>
-              <goal>verify</goal>
             </goals>
             <configuration>
-              <properties>
-                <property>
-                  <name>dataproviderthreadcount</name>
-                  <value>2</value>
-                </property>
+
+              <!-- UNCOMMENT - To add any exclusions if required -->
+              <!-- <excludes> <exclude>**/*IT*.java</exclude> </excludes> -->
+
+              <!--<includes>
+
+                &lt;!&ndash; UNCOMMENT BELOW LINE - To execute feature files with a single
+                    runner &ndash;&gt;
+                &lt;!&ndash; <include>**/Default.java</include> &ndash;&gt;
+
+                &lt;!&ndash; UNCOMMENT BELOW LINE - To execute feature files with multiple
+                    runners &ndash;&gt;
+                <include>**/*Runner.java</include>
+              </includes>-->
+
+              <!-- OPTIONAL UNCOMMENT BELOW 6 LINES - To set data provider thread count value.
+              Default is 10. For executing using parallel or forking -->
+               <properties>
+                  <property>
+                      <name>dataproviderthreadcount</name>
+                      <value>1</value>
+                  </property>
               </properties>
+
+              <!-- OPTIONAL UNCOMMENT BELOW 3 LINES - In case of multiple runners to further reduce times.
+              For executing using parallel -->
+              <!-- <parallel>classes</parallel>
+              <threadCount>4</threadCount>
+              <perCoreThreadCount>true</perCoreThreadCount> -->
+
+              <!-- UNCOMMENT BELOW 3 LINES - To execute using forking
+                  option -->
+              <!-- <forkCount>2</forkCount>
+              <reuseForks>true</reuseForks>
+              <reportsDirectory>${project.build.directory}/failsafe-reports_${surefire.forkNumber}</reportsDirectory> -->
+
             </configuration>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>com.trivago.rta</groupId>
         <artifactId>cluecumber-report-plugin</artifactId>
