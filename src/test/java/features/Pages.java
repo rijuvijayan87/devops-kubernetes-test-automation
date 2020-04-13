@@ -6,7 +6,6 @@ import pageObject.ApplicationPageLaunchObject;
 import pageObject.LandingPageObject;
 
 public abstract class Pages extends DriverFactory {
-    protected EventFiringWebDriver driver;
     protected ApplicationPageLaunchObject applicationLaunchObject;
     protected LandingPageObject landingPageObject;
 

@@ -10,12 +10,10 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import java.io.IOException;
 
 public class MasterHooks extends Pages {
-    private EventFiringWebDriver driver;
 
     @Before
     public void setup(Scenario cukeScenarioObj) throws IOException {
         driver = createWebDriver();
-        setWebDriver(driver);
         persistentData.setContext("testCase", cukeScenarioObj.getName());
     }
 
@@ -26,7 +24,6 @@ public class MasterHooks extends Pages {
 
             }
             if (driver != null) {
-                driver.unregister(handler);
                 driver.manage().deleteAllCookies();
                 driver.quit();
             }

@@ -19,6 +19,7 @@ public class BasePage extends PropertyFiles {
 
     protected BasePage(WebDriver driver) {
         if (driver != null) {
+            this.driver = driver;
             wait = new WebDriverWait(driver, 30);
         }
         ConfigFactory.setProperty("env", getPropertyValue("ENVIRONMENT"));

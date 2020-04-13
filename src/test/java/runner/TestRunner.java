@@ -5,7 +5,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(
         features = {"src/test/java/features/train-schedule.feature"},
-        glue = {"src/test/java/features/stepDefinitions"},
+        glue = {"features.stepDefinitions"},
         monochrome = true,
         strict = true,
         plugin = {"json:target/cucumber-report-feature-composite.json"},

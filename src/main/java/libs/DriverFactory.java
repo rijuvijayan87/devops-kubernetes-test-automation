@@ -1,5 +1,6 @@
 package libs;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,13 +15,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverFactory extends PropertyFiles {
-    private WebDriver wd;
-    protected EventFiringWebDriver driver;
-    protected EventHandler handler;
+    protected static WebDriver driver;
     protected ScenarioContext persistentData;
 
 
-    protected EventFiringWebDriver createWebDriver() throws MalformedURLException {
+    protected WebDriver createWebDriver() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         if (getPropertyValue("EXECUTIONONSERVER").equalsIgnoreCase("true")) {
 
@@ -41,24 +40,14 @@ public class DriverFactory extends PropertyFiles {
             }
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             try {
-                wd = new RemoteWebDriver(new URL(getPropertyValue("selenium_local_server")), capabilities);
+                this.driver = new RemoteWebDriver(new URL(getPropertyValue("selenium_local_server")), capabilities);
             } catch (UnreachableBrowserException exception) {
-                System.out.println("WebDriver creation failed. Possibly Remote webdriver endpoint is not configured properly. Check <IP>:4444/wd/hub endpoint");
-                System.out.println(exception.getMessage());
-                System.exit(1);
+                System.out.println("Selenium server not setup. Creating driver using webdriver manager");
+                WebDriverManager.chromedriver().setup();
+                this.driver = new ChromeDriver();
             }
-        } else {
-            System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\developer\\Chrome_Driver\\chromedriver.exe");
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("useAutomationExtension", false);
-            options.addArguments("--remote-debugging-port=10000");
-            wd = new ChromeDriver(options);
         }
-        driver = new EventFiringWebDriver(wd);
-        handler = new EventHandler();
-        driver.register(handler);
-
-        wd.manage().window().maximize();
+        driver.manage().window().maximize();
 
         initializeObjects();
         return driver;
@@ -69,7 +58,7 @@ public class DriverFactory extends PropertyFiles {
      * Any new Page object that gets created should be initialised here.
      */
     private void initializeObjects() {
-        if (wd != null) {
+        if (driver != null) {
             persistentData = new ScenarioContext();
         }
     }
