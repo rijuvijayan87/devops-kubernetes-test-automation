@@ -146,21 +146,28 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>3.0.0-M4</version>
-        <configuration>
-          <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
-          </suiteXmlFiles>
-          <properties>
-            <property>
-              <name>parallel</name>
-              <value>methods</value>
-            </property>
-            <property>
-              <name>dataproviderthreadcount</name>
-              <value>4</value>
-            </property>
-          </properties>
-        </configuration>
+<!--        <configuration>-->
+<!--          <suiteXmlFiles>-->
+<!--            <suiteXmlFile>testng.xml</suiteXmlFile>-->
+<!--          </suiteXmlFiles>-->
+
+<!--        </configuration>-->
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>dataproviderthreadcount</name>
+                  <value>2</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.trivago.rta</groupId>
