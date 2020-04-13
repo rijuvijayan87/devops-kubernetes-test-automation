@@ -16,43 +16,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class CommonContext {
-    protected WebDriver driver;
-    protected ScenarioContext persistentData;
-    private PropertyFiles propertyFiles = new PropertyFiles();
+    private WebDriver driver;
     private LandingPageObject landingPageObject;
 
-    protected WebDriver createWebDriver() throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        if (propertyFiles.getPropertyValue("EXECUTIONONSERVER").equalsIgnoreCase("true")) {
-
-            if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("chrome")) {
-                capabilities = DesiredCapabilities.chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--remote-debugging-port=9222");
-                options.setExperimentalOption("useAutomationExtension", false);
-                if (propertyFiles.getPropertyValue("HEADLESS").equalsIgnoreCase("true")) {
-                    options.addArguments("HEADLESS");
-                }
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("firefox")) {
-                capabilities = DesiredCapabilities.firefox();
-            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("ie")) {
-                capabilities = DesiredCapabilities.internetExplorer();
-            }
-            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            try {
-                this.driver = new RemoteWebDriver(new URL(propertyFiles.getPropertyValue("selenium_local_server")), capabilities);
-            } catch (UnreachableBrowserException exception) {
-                System.out.println("Selenium server not setup. Creating driver using webdriver manager");
-                WebDriverManager.chromedriver().setup();
-                this.driver = new ChromeDriver();
-            }
-        }
-        driver.manage().window().maximize();
-
-        initializeObjects();
+    public WebDriver getDriver() {
         return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 
     public void setLandingPageObject(LandingPageObject landingPageObject){
@@ -63,13 +35,6 @@ public class CommonContext {
         return landingPageObject;
     }
 
-    /**
-     * Initialize PageObjects here.
-     * Any new Page object that gets created should be initialised here.
-     */
-    private void initializeObjects() {
-        if (driver != null) {
-            persistentData = new ScenarioContext();
-        }
-    }
+
+
 }

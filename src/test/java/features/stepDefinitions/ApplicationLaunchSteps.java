@@ -14,7 +14,7 @@ public class ApplicationLaunchSteps {
 
     @Given("the user wants to use train schedule application")
     public void the_user_wants_to_use_train_schedule_application() {
-        ApplicationPageLaunchObject applicationPageLaunchObject = new ApplicationPageLaunchObject(commonContext.driver);
+        ApplicationPageLaunchObject applicationPageLaunchObject = new ApplicationPageLaunchObject(commonContext.getDriver());
         LandingPageObject landingPageObject = applicationPageLaunchObject.launchApplication();
         commonContext.setLandingPageObject(landingPageObject);
     }
