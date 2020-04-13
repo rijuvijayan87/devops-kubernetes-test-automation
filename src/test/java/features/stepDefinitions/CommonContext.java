@@ -9,16 +9,17 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
+import pageObject.LandingPageObject;
 import persistence.ScenarioContext;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DriverFactory {
+public class CommonContext {
     protected WebDriver driver;
     protected ScenarioContext persistentData;
     private PropertyFiles propertyFiles = new PropertyFiles();
+    private LandingPageObject landingPageObject;
 
     protected WebDriver createWebDriver() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -52,6 +53,14 @@ public class DriverFactory {
 
         initializeObjects();
         return driver;
+    }
+
+    public void setLandingPageObject(LandingPageObject landingPageObject){
+        this.landingPageObject = landingPageObject;
+    }
+
+    public LandingPageObject getLandingPageObject(){
+        return landingPageObject;
     }
 
     /**

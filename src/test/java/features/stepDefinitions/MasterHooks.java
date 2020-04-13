@@ -10,15 +10,15 @@ import java.io.IOException;
 public class MasterHooks {
 
     private WebDriver driver;
-    private DriverFactory driverFactory;
+    private CommonContext commonContext;
 
-    public MasterHooks(DriverFactory factory){
-        this.driverFactory = factory;
+    public MasterHooks(CommonContext factory){
+        this.commonContext = factory;
     }
 
     @Before
     public void setup(Scenario cukeScenarioObj) throws IOException {
-        this.driver = driverFactory.createWebDriver();
+        this.driver = commonContext.createWebDriver();
     }
 
     @After
