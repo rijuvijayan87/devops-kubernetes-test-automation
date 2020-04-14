@@ -16,36 +16,38 @@ public class DriverFactory {
     private WebDriver driver;
     private PropertyFiles propertyFiles = new PropertyFiles();
 
-    public WebDriver createWebDriver() throws MalformedURLException {
+    public WebDriver createWebDriver() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        if (propertyFiles.getPropertyValue("EXECUTIONONSERVER").equalsIgnoreCase("true")) {
-
-            if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("chrome")) {
-                capabilities = DesiredCapabilities.chrome();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--remote-debugging-port=9222");
-                options.setExperimentalOption("useAutomationExtension", false);
-                if (propertyFiles.getPropertyValue("HEADLESS").equalsIgnoreCase("true")) {
-                    options.addArguments("HEADLESS");
-                }
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("firefox")) {
-                capabilities = DesiredCapabilities.firefox();
-            } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("ie")) {
-                capabilities = DesiredCapabilities.internetExplorer();
+        if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("chrome")) {
+            capabilities = DesiredCapabilities.chrome();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-debugging-port=9222");
+            options.setExperimentalOption("useAutomationExtension", false);
+            if (propertyFiles.getPropertyValue("HEADLESS").equalsIgnoreCase("true")) {
+                options.addArguments("HEADLESS");
             }
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+        } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("firefox")) {
+            capabilities = DesiredCapabilities.firefox();
+        } else if (propertyFiles.getPropertyValue("BROWSER").equalsIgnoreCase("ie")) {
+            capabilities = DesiredCapabilities.internetExplorer();
+        }
+        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+        try {
             try {
                 this.driver = new RemoteWebDriver(new URL(propertyFiles.getPropertyValue("selenium_local_server")), capabilities);
+                System.out.println("Test running on Selenium server : " + Thread.currentThread());
             } catch (UnreachableBrowserException exception) {
                 System.out.println("Selenium server not setup. Creating driver using webdriver manager");
                 WebDriverManager.chromedriver().setup();
                 this.driver = new ChromeDriver();
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            System.exit(1);
         }
         driver.manage().window().maximize();
-
         return driver;
     }
 }

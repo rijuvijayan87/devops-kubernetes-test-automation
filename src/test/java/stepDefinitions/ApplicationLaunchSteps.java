@@ -1,4 +1,4 @@
-package features.stepDefinitions;
+package stepDefinitions;
 
 import cucumber.api.java.en.Given;
 import pageObject.ApplicationPageLaunchObject;

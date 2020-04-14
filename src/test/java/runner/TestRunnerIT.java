@@ -5,15 +5,15 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = {"src/test/java/features/train-schedule.feature"},
-        glue = {"features.stepDefinitions"},
+        features = {"src/test/resources/features"},
+        glue = {"stepDefinitions"},
         monochrome = true,
         strict = true,
         plugin = {"json:target/cucumber-report/cucumber.json"},
         dryRun = false,
         tags = {""}
 )
-public class TestRunner extends AbstractTestNGCucumberTests {
+public class TestRunnerIT extends AbstractTestNGCucumberTests {
 
 
     @Override

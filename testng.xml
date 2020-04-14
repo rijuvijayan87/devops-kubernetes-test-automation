@@ -3,7 +3,7 @@
 <suite name="Test Engineering Core Suite" parallel="methods" data-provider-thread-count="2" thread-count="1">
     <test name="Test Engineering Core_test">
         <classes>
-            <class name="runner.TestRunner"/>
+            <class name="runner.TestRunnerIT"/>
         </classes>
     </test>
 </suite>

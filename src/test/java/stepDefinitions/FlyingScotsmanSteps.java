@@ -1,4 +1,4 @@
-package features.stepDefinitions;
+package stepDefinitions;
 
 public class FlyingScotsmanSteps {
 }
