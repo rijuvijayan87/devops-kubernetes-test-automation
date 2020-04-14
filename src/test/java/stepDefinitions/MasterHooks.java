@@ -4,6 +4,8 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import libs.DriverFactory;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class MasterHooks {
     private CommonContext commonContext;
     private DriverFactory driverFactory;
 
-    public MasterHooks(CommonContext commonContext, DriverFactory driverFactory){
+    public MasterHooks(CommonContext commonContext, DriverFactory driverFactory) {
         this.commonContext = commonContext;
         this.driverFactory = driverFactory;
     }
@@ -28,8 +30,11 @@ public class MasterHooks {
     @After
     public void tearDownAndScreenShotOnFailure(Scenario cukeScenario) {
         try {
+            final byte[] screenshot = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.BYTES);
             if (driver != null && cukeScenario.isFailed()) {
-
+                cukeScenario.embed(screenshot, "image/png");
+            } else {
+                cukeScenario.embed(screenshot, "image/png");
             }
             if (driver != null) {
                 driver.manage().deleteAllCookies();
