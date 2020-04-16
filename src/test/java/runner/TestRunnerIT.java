@@ -9,7 +9,8 @@ import org.testng.annotations.DataProvider;
         glue = {"stepDefinitions"},
         monochrome = true,
         strict = true,
-        plugin = {"json:target/cucumber-report/cucumber.json"},
+        //plugin = {"json:target/cucumber-report/cucumber.json"},
+        plugin = {"pretty", "com.epam.reportportal.cucumber.StepReporter"},
         dryRun = false,
         tags = {""}
 )
