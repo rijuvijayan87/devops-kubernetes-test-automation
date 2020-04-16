@@ -20,24 +20,7 @@
         <skip.surefire.tests>true</skip.surefire.tests>
         <parallel.execution.thread>2</parallel.execution.thread>
     </properties>
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-epam-reportportal</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/epam/reportportal</url>
-        </repository>
-    </repositories>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.epam.reportportal/agent-java-cucumber -->
-        <dependency>
-            <groupId>com.epam.reportportal</groupId>
-            <artifactId>agent-java-cucumber</artifactId>
-            <version>4.0.2</version>
-        </dependency>
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
